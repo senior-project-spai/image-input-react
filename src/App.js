@@ -8,6 +8,9 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { Paper, InputAdornment, IconButton } from "@material-ui/core";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 
+import CameraIcon from "@material-ui/icons/Camera";
+import Webcam from "react-webcam";
+
 const useStyles = makeStyles(theme => ({
   layout: {
     width: "auto",
@@ -30,6 +33,12 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
+async function urlToFile(url, filename, mimeType) {
+  const res = await fetch(url);
+  const buffer = await res.arrayBuffer();
+  return new File([buffer], filename, { type: mimeType });
+}
+
 function FileUploader(props) {
   const classes = useStyles();
   const [file, setFile] = useState(undefined);
@@ -38,6 +47,10 @@ function FileUploader(props) {
     "http://image-to-s3-babe-test.apps.spai.ml/_api/image"
   );
   const [isUploading, setIsUploading] = useState(false);
+  const [isShowWebcam, setIsShowWebcam] = useState(false);
+  const webcamRef = useRef(null);
+
+  /* <input type=file /> */
   const fileEl = useRef(null);
   const onBrowseClick = () => {
     fileEl.current.click();
@@ -78,6 +91,22 @@ function FileUploader(props) {
     });
   };
 
+  const onWebcamClick = async () => {
+    const imageSrc = webcamRef.current.getScreenshot();
+    const webcamFile = await urlToFile(
+      imageSrc,
+      `webcam-${Date.now()}.jpg`,
+      "image/jpeg"
+    );
+    setFile(webcamFile);
+    setFileName(webcamFile.name);
+    setIsShowWebcam(false);
+  };
+
+  const onWebcamToggle = () => {
+    setIsShowWebcam(!isShowWebcam);
+  };
+
   return (
     <form onSubmit={onSubmit}>
       <TextField
@@ -104,14 +133,28 @@ function FileUploader(props) {
         fullWidth
         InputProps={{
           endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={onBrowseClick}>
-                <InsertDriveFileIcon color="secondary" />
-              </IconButton>
-            </InputAdornment>
+            <React.Fragment>
+              <InputAdornment position="end">
+                <IconButton>
+                  <CameraIcon color="secondary" onClick={onWebcamToggle} />
+                </IconButton>
+                <IconButton onClick={onBrowseClick}>
+                  <InsertDriveFileIcon color="secondary" />
+                </IconButton>
+              </InputAdornment>
+            </React.Fragment>
           )
         }}
       />
+      {isShowWebcam && (
+        <Webcam
+          ref={webcamRef}
+          audio={false}
+          screenshotFormat="image/jpeg"
+          width="100%"
+          onClick={onWebcamClick}
+        />
+      )}
       <TextField
         type="text"
         name="fileName"
