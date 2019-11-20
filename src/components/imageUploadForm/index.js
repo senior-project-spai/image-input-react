@@ -143,7 +143,7 @@ export default function ImageUploadForm(props) {
       {isShowWebcam && (
         <Box marginTop={4}>
           <Typography variant="body2" color="textSecondary">
-            Webcam
+            Webcam (Click to Capture)
           </Typography>
           <Webcam
             ref={webcamRef}
