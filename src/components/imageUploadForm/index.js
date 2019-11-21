@@ -33,7 +33,7 @@ export default function ImageUploadForm(props) {
   const [fileName, setFileName] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [endpoint, setEndpoint] = useState(
-    "https://image-to-s3-babe-test.apps.spai.ml/_api/image"
+    "https://image-to-s3-spai.apps.spai.ml/_api/image"
   );
 
   const uploadFile = async (file, fileName, endpoint) => {
