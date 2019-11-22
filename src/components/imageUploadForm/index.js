@@ -8,7 +8,8 @@ import {
   InputAdornment,
   TextField,
   Typography,
-  Box
+  Box,
+  Grid
 } from "@material-ui/core";
 import CameraIcon from "@material-ui/icons/Camera";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
@@ -35,6 +36,8 @@ export default function ImageUploadForm(props) {
   const [endpoint, setEndpoint] = useState(
     "https://image-to-s3-spai.apps.spai.ml/_api/image"
   );
+  const [cameraID, setCameraID] = useState(0);
+  const [branchID, setBranchID] = useState(0);
 
   const uploadFile = async (file, fileName, endpoint) => {
     if (isUploading) {
@@ -45,17 +48,22 @@ export default function ImageUploadForm(props) {
     const formData = new FormData();
     formData.append("picture", file);
     formData.append("pictureName", fileName);
+    formData.append("time", Date.now());
+    formData.append("branch_id", branchID)
+    formData.append("camera_id", cameraID)
     try {
       const res = await fetch(endpoint, {
         method: "POST",
         body: formData
       });
-      console.log(res.data);
+      console.log(res.status, res.data);
     } catch (error) {
       console.error(error);
     }
     setIsUploading(false);
   };
+
+  /* Presentation */
 
   const [isShowWebcam, setIsShowWebcam] = useState(false);
   const webcamRef = useRef(null);
@@ -76,6 +84,14 @@ export default function ImageUploadForm(props) {
 
   const onChangeEndpointInput = e => {
     setEndpoint(e.target.value);
+  };
+
+  const onChangeBranchIDInput = e => {
+    setBranchID(e.target.value);
+  };
+
+  const onChangeCameraIDInput = e => {
+    setCameraID(e.target.value);
   };
 
   const onSubmit = e => {
@@ -112,6 +128,30 @@ export default function ImageUploadForm(props) {
         fullWidth
         margin="normal"
       />
+      <Grid container spacing={3}>
+        <Grid item xs>
+          <TextField
+            type="text"
+            name="branch_id"
+            label="branch_id"
+            value={branchID}
+            onChange={onChangeBranchIDInput}
+            fullWidth
+            margin="normal"
+          />
+        </Grid>
+        <Grid item xs>
+          <TextField
+            type="text"
+            name="camera_id"
+            label="camera_id"
+            value={cameraID}
+            onChange={onChangeCameraIDInput}
+            fullWidth
+            margin="normal"
+          />
+        </Grid>
+      </Grid>
       <input
         ref={fileEl}
         type="file"

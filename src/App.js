@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
       marginLeft: "auto",
       marginRight: "auto"
     },
-    paddingTop: theme.spacing(6),
+    paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(1)
   },
   paper: {
