@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import Webcam from "react-webcam";
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -49,8 +49,8 @@ export default function ImageUploadForm(props) {
     formData.append("picture", file);
     formData.append("pictureName", fileName);
     formData.append("time", Date.now());
-    formData.append("branch_id", branchID)
-    formData.append("camera_id", cameraID)
+    formData.append("branch_id", branchID);
+    formData.append("camera_id", cameraID);
     try {
       const res = await fetch(endpoint, {
         method: "POST",
@@ -68,6 +68,10 @@ export default function ImageUploadForm(props) {
   const [isShowWebcam, setIsShowWebcam] = useState(false);
   const webcamRef = useRef(null);
   const fileEl = useRef(null);
+  const previewImageURL = useMemo(
+    () => (file ? URL.createObjectURL(file) : ""),
+    [file]
+  );
 
   const onClickBrowseButton = () => {
     fileEl.current.click();
@@ -207,7 +211,7 @@ export default function ImageUploadForm(props) {
             Preview Image
           </Typography>
           <img
-            src={URL.createObjectURL(file)}
+            src={previewImageURL}
             alt={file.name}
             style={{ width: "100%" }}
           />
