@@ -87,11 +87,11 @@ export default function ImageUploadForm(props) {
   };
 
   const onChangeBranchIDInput = e => {
-    setBranchID(e.target.value);
+    setBranchID(parseInt(e.target.value));
   };
 
   const onChangeCameraIDInput = e => {
-    setCameraID(e.target.value);
+    setCameraID(parseInt(e.target.value));
   };
 
   const onSubmit = e => {
@@ -134,7 +134,6 @@ export default function ImageUploadForm(props) {
             type="text"
             name="branch_id"
             label="branch_id"
-            value={branchID}
             onChange={onChangeBranchIDInput}
             fullWidth
             margin="normal"
@@ -145,7 +144,6 @@ export default function ImageUploadForm(props) {
             type="text"
             name="camera_id"
             label="camera_id"
-            value={cameraID}
             onChange={onChangeCameraIDInput}
             fullWidth
             margin="normal"
