@@ -48,7 +48,7 @@ export default function ImageUploadForm(props) {
     const formData = new FormData();
     formData.append("picture", file);
     formData.append("pictureName", fileName);
-    formData.append("time", Date.now());
+    formData.append("time", Math.round(Date.now() / 1000));
     formData.append("branch_id", branchID);
     formData.append("camera_id", cameraID);
     try {
@@ -107,7 +107,7 @@ export default function ImageUploadForm(props) {
     const imageSrc = webcamRef.current.getScreenshot();
     const webcamFile = await urlToFile(
       imageSrc,
-      `webcam-${Date.now()}.jpg`,
+      `webcam-${Math.round(Date.now() / 1000)}.jpg`,
       "image/jpeg"
     );
     setFile(webcamFile);
