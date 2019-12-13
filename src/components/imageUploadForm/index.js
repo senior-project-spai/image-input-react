@@ -141,6 +141,7 @@ export default function ImageUploadForm(props) {
             onChange={onChangeBranchIDInput}
             fullWidth
             margin="normal"
+            defaultValue={0}
           />
         </Grid>
         <Grid item xs>
@@ -151,6 +152,7 @@ export default function ImageUploadForm(props) {
             onChange={onChangeCameraIDInput}
             fullWidth
             margin="normal"
+            defaultValue={0}
           />
         </Grid>
       </Grid>
@@ -193,6 +195,7 @@ export default function ImageUploadForm(props) {
             screenshotFormat="image/jpeg"
             width="100%"
             onClick={onClickWebcam}
+            videoConstraints={{ facingMode: { exact: "environment" } }}
           />
         </Box>
       )}
