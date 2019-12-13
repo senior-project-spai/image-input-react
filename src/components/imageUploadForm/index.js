@@ -195,7 +195,8 @@ export default function ImageUploadForm(props) {
             screenshotFormat="image/jpeg"
             width="100%"
             onClick={onClickWebcam}
-            videoConstraints={{ facingMode: { exact: "environment" } }}
+            // videoConstraints={{ facingMode: { exact: "environment" } }}
+            onUserMediaError={error => console.log(`Webcam error: ${error}`)}
           />
         </Box>
       )}
