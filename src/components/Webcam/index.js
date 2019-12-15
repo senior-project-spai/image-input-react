@@ -36,11 +36,12 @@ export default React.forwardRef((props, ref) => {
     }
   };
 
-  const videoConstraints = cameraStatus
-    ? {
-        facingMode: { exact: facingMode }
-      }
-    : undefined;
+  const videoConstraints =
+    facingMode === "environment"
+      ? {
+          facingMode: { exact: facingMode }
+        }
+      : undefined;
 
   return (
     <Box position="relative">
