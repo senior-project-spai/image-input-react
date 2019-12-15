@@ -66,7 +66,6 @@ export default function ImageUploadForm(props) {
   /* Presentation */
 
   const [isShowWebcam, setIsShowWebcam] = useState(false);
-  const webcamRef = useRef(null);
   const fileEl = useRef(null);
   const previewImageURL = useMemo(
     () => (file ? URL.createObjectURL(file) : ""),

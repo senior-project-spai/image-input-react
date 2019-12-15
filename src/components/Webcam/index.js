@@ -4,14 +4,14 @@ import { Box, IconButton } from "@material-ui/core";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import FlipCameraIosIcon from "@material-ui/icons/FlipCameraIos";
 
-const DEFAULT_FACING_MODE = "user";
+const DEFAULT_FACING_MODE = "environment";
 
-export default React.forwardRef((props, ref) => {
+export default function MyWebcam(props) {
   const { onGetScreenshot, ...rest } = props;
 
   const webcamRef = useRef(null);
   const [cameraStatus, setCameraStatus] = useState(2);
-  const [facingMode, setFacingMode] = useState(DEFAULT_FACING_MODE); // "user"
+  const [facingMode, setFacingMode] = useState(DEFAULT_FACING_MODE);
 
   const changeCameraStatus = error => {
     if (cameraStatus === 2) {
@@ -20,6 +20,7 @@ export default React.forwardRef((props, ref) => {
     } else if (cameraStatus === 1) {
       setCameraStatus(0);
     } else {
+      setCameraStatus(-1);
       console.error(error);
     }
   };
@@ -36,8 +37,10 @@ export default React.forwardRef((props, ref) => {
     }
   };
 
+  if (cameraStatus === -1) return null;
+
   const videoConstraints =
-    facingMode === "environment"
+    cameraStatus > 0
       ? {
           facingMode: { exact: facingMode }
         }
@@ -74,4 +77,4 @@ export default React.forwardRef((props, ref) => {
       </Box>
     </Box>
   );
-});
+}
