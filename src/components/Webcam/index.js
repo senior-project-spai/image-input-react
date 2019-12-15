@@ -4,7 +4,7 @@ import { Box, IconButton } from "@material-ui/core";
 import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import FlipCameraIosIcon from "@material-ui/icons/FlipCameraIos";
 
-const DEFAULT_FACING_MODE = "environment";
+const DEFAULT_FACING_MODE = "user";
 
 export default React.forwardRef((props, ref) => {
   const { onGetScreenshot, ...rest } = props;
