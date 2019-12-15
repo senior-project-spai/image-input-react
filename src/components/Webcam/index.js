@@ -51,6 +51,7 @@ export default React.forwardRef((props, ref) => {
         onUserMediaError={changeCameraStatus}
         videoConstraints={videoConstraints}
         style={{ display: "block" }}
+        key={facingMode}
       />
       <Box
         position="absolute"
