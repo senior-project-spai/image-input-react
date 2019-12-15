@@ -1,5 +1,5 @@
 import React, { useState, useRef, useMemo } from "react";
-import Webcam from "react-webcam";
+import Webcam from "components/Webcam";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
@@ -103,8 +103,7 @@ export default function ImageUploadForm(props) {
     uploadFile(file, fileName, endpoint);
   };
 
-  const onClickWebcam = async () => {
-    const imageSrc = webcamRef.current.getScreenshot();
+  const onGetScreenshot = async (imageSrc) => {
     const webcamFile = await urlToFile(
       imageSrc,
       `webcam-${Math.round(Date.now() / 1000)}.jpg`,
@@ -187,18 +186,12 @@ export default function ImageUploadForm(props) {
       {isShowWebcam && (
         <Box marginTop={4}>
           <Typography variant="body2" color="textSecondary">
-            Webcam (Click to Capture)
+            Webcam
           </Typography>
           <Webcam
-            ref={webcamRef}
             audio={false}
             screenshotFormat="image/jpeg"
-            width="100%"
-            onClick={onClickWebcam}
-            videoConstraints={{
-              facingMode: { ideal: ["environment", "user"] }
-            }}
-            onUserMediaError={error => console.log(`Webcam error: ${error}`)}
+            onGetScreenshot={onGetScreenshot}
           />
         </Box>
       )}
