@@ -62,8 +62,8 @@ export default function ImageUploadForm(props) {
 
     setIsUploading(true);
     const formData = new FormData();
-    formData.append("picture", file);
-    formData.append("pictureName", fileName);
+    formData.append("image", file);
+    formData.append("image_name", fileName);
     formData.append("time", Math.round(Date.now() / 1000));
     formData.append("branch_id", branchID);
     formData.append("camera_id", cameraID);
@@ -72,7 +72,8 @@ export default function ImageUploadForm(props) {
         method: "POST",
         body: formData
       });
-      console.log(res.status, res.data);
+      const json = await res.json();
+      console.log(res.status, `face_image_id: ${json["face_image_id"]}`);
     } catch (error) {
       console.error(error);
     }
