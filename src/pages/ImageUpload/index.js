@@ -20,7 +20,7 @@ import {
 import CameraIcon from "@material-ui/icons/Camera";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 
-const DEFAULT_ENDPOINT = "https://face-image-input-api-spai.apps.spai.ml/_api/face";
+const ENDPOINT = process.env.REACT_APP_API_ENDPOINT || "https://face-image-input-api-spai.apps.spai.ml/_api/face";
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -51,7 +51,7 @@ export default function ImageUploadForm(props) {
   const [file, setFile] = useState(undefined);
   const [fileName, setFileName] = useState("");
   const [isUploading, setIsUploading] = useState(false);
-  const [endpoint, setEndpoint] = useState(DEFAULT_ENDPOINT);
+  const [endpoint, setEndpoint] = useState(ENDPOINT);
   const [cameraID, setCameraID] = useState(0);
   const [branchID, setBranchID] = useState(0);
 
