@@ -20,7 +20,7 @@ import {
 import CameraIcon from "@material-ui/icons/Camera";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 
-const ENDPOINT = process.env.REACT_APP_API_ENDPOINT || "https://face-image-input-api-spai.apps.spai.ml/_api/face";
+const ENDPOINT = process.env.REACT_APP_API_ENDPOINT || "";
 
 const useStyles = makeStyles(theme => ({
   layout: {
