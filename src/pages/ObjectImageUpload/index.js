@@ -9,7 +9,6 @@ import {
   TextField,
   Typography,
   Box,
-  Grid,
   Card,
   Divider,
   CardContent,
@@ -20,7 +19,7 @@ import {
 import CameraIcon from "@material-ui/icons/Camera";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 
-const ENDPOINT = process.env.REACT_APP_API_ENDPOINT || "";
+const ENDPOINT = process.env.REACT_APP_OBJECT_API_ENDPOINT || "";
 
 const useStyles = makeStyles(theme => ({
   layout: {
@@ -52,8 +51,6 @@ export default function ImageUploadForm(props) {
   const [fileName, setFileName] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [endpoint, setEndpoint] = useState(ENDPOINT);
-  const [cameraID, setCameraID] = useState(0);
-  const [branchID, setBranchID] = useState(0);
 
   const uploadFile = async (file, fileName, endpoint) => {
     if (isUploading) {
@@ -65,15 +62,12 @@ export default function ImageUploadForm(props) {
     formData.append("image", file);
     formData.append("image_name", fileName);
     formData.append("time", Math.round(Date.now() / 1000));
-    formData.append("branch_id", branchID);
-    formData.append("camera_id", cameraID);
     try {
       const res = await fetch(endpoint, {
         method: "POST",
         body: formData
       });
-      const json = await res.json();
-      console.log(res.status, `face_image_id: ${json["face_image_id"]}`);
+      console.log(res.status);
     } catch (error) {
       console.error(error);
     }
@@ -106,14 +100,6 @@ export default function ImageUploadForm(props) {
     setEndpoint(e.target.value);
   };
 
-  const onChangeBranchIDInput = e => {
-    setBranchID(parseInt(e.target.value));
-  };
-
-  const onChangeCameraIDInput = e => {
-    setCameraID(parseInt(e.target.value));
-  };
-
   const onSubmit = e => {
     e.preventDefault();
     uploadFile(file, fileName, endpoint);
@@ -144,7 +130,7 @@ export default function ImageUploadForm(props) {
         <AppBar position="static" elevation={0}>
           <Toolbar>
             <Typography variant="h5" color="">
-              Face Image Upload
+              Object Image Upload
             </Typography>
           </Toolbar>
         </AppBar>
@@ -160,32 +146,6 @@ export default function ImageUploadForm(props) {
               variant="outlined"
               margin="normal"
             />
-            <Grid container spacing={3}>
-              <Grid item xs>
-                <TextField
-                  type="text"
-                  name="branch_id"
-                  label="Branch ID"
-                  onChange={onChangeBranchIDInput}
-                  fullWidth
-                  defaultValue={0}
-                  variant="outlined"
-                  margin="normal"
-                />
-              </Grid>
-              <Grid item xs>
-                <TextField
-                  type="text"
-                  name="camera_id"
-                  label="Camera ID"
-                  onChange={onChangeCameraIDInput}
-                  fullWidth
-                  margin="normal"
-                  defaultValue={0}
-                  variant="outlined"
-                />
-              </Grid>
-            </Grid>
             <input
               ref={fileEl}
               type="file"
