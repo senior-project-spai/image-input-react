@@ -15,10 +15,13 @@ import {
   CardContent,
   CardActions,
   AppBar,
-  Toolbar
+  Toolbar,
+  Tab,
+  Tabs
 } from "@material-ui/core";
 import CameraIcon from "@material-ui/icons/Camera";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
+import { Link } from "react-router-dom";
 
 const ENDPOINT = process.env.REACT_APP_API_ENDPOINT || "";
 
@@ -141,12 +144,11 @@ export default function ImageUploadForm(props) {
       <Card>
         {/* <CardHeader title="Image Upload" />
         <Divider /> */}
-        <AppBar position="static" elevation={0}>
-          <Toolbar>
-            <Typography variant="h5" color="">
-              Face Image Upload
-            </Typography>
-          </Toolbar>
+        <AppBar position="static" >
+          <Tabs value={0}>
+            <Tab label="😀Face" component={Link} to="/face" />
+            <Tab label="📦Object" component={Link} to="/object" />
+          </Tabs>
         </AppBar>
         <form onSubmit={onSubmit}>
           <CardContent>

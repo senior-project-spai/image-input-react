@@ -14,30 +14,32 @@ import {
   CardContent,
   CardActions,
   AppBar,
-  Toolbar
+  Tab,
+  Tabs,
 } from "@material-ui/core";
+import Link from 'react-router-dom/Link'
 import CameraIcon from "@material-ui/icons/Camera";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 
 const ENDPOINT = process.env.REACT_APP_OBJECT_API_ENDPOINT || "";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   layout: {
     width: "auto",
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
       width: 600,
       marginLeft: "auto",
-      marginRight: "auto"
+      marginRight: "auto",
     },
     paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(1)
+    paddingBottom: theme.spacing(1),
   },
   inputFile: {
-    margin: `${theme.spacing(0.5)}px 0`
+    margin: `${theme.spacing(0.5)}px 0`,
   },
   button: {
-    marginTop: theme.spacing(3)
-  }
+    marginTop: theme.spacing(3),
+  },
 }));
 
 async function urlToFile(url, filename, mimeType) {
@@ -65,7 +67,7 @@ export default function ImageUploadForm(props) {
     try {
       const res = await fetch(endpoint, {
         method: "POST",
-        body: formData
+        body: formData,
       });
       console.log(res.status);
     } catch (error) {
@@ -87,25 +89,25 @@ export default function ImageUploadForm(props) {
     fileEl.current.click();
   };
 
-  const onChangeFileInput = e => {
+  const onChangeFileInput = (e) => {
     setFile(e.target.files[0]);
     setFileName(e.target.files[0] ? e.target.files[0].name : "");
   };
 
-  const onChangeFileNameInput = e => {
+  const onChangeFileNameInput = (e) => {
     setFileName(e.target.value);
   };
 
-  const onChangeEndpointInput = e => {
+  const onChangeEndpointInput = (e) => {
     setEndpoint(e.target.value);
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     uploadFile(file, fileName, endpoint);
   };
 
-  const onGetScreenshot = async imageSrc => {
+  const onGetScreenshot = async (imageSrc) => {
     const webcamFile = await urlToFile(
       imageSrc,
       `webcam-${Math.round(Date.now() / 1000)}.jpg`,
@@ -127,12 +129,11 @@ export default function ImageUploadForm(props) {
       <Card>
         {/* <CardHeader title="Image Upload" />
         <Divider /> */}
-        <AppBar position="static" elevation={0}>
-          <Toolbar>
-            <Typography variant="h5" color="">
-              Object Image Upload
-            </Typography>
-          </Toolbar>
+        <AppBar position="static">
+          <Tabs value={1}>
+            <Tab label="😀Face" component={Link} to="/face" />
+            <Tab label="📦Object" component={Link} to="/object" />
+          </Tabs>
         </AppBar>
         <form onSubmit={onSubmit}>
           <CardContent>
@@ -173,7 +174,7 @@ export default function ImageUploadForm(props) {
                       </IconButton>
                     </InputAdornment>
                   </React.Fragment>
-                )
+                ),
               }}
             />
             {isShowWebcam && (
