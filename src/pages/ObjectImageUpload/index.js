@@ -23,7 +23,7 @@ import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 
 const ENDPOINT = process.env.REACT_APP_OBJECT_API_ENDPOINT || "";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   layout: {
     width: "auto",
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
@@ -89,25 +89,25 @@ export default function ImageUploadForm(props) {
     fileEl.current.click();
   };
 
-  const onChangeFileInput = (e) => {
+  const onChangeFileInput = e => {
     setFile(e.target.files[0]);
     setFileName(e.target.files[0] ? e.target.files[0].name : "");
   };
 
-  const onChangeFileNameInput = (e) => {
+  const onChangeFileNameInput = e => {
     setFileName(e.target.value);
   };
 
-  const onChangeEndpointInput = (e) => {
+  const onChangeEndpointInput = e => {
     setEndpoint(e.target.value);
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = e => {
     e.preventDefault();
     uploadFile(file, fileName, endpoint);
   };
 
-  const onGetScreenshot = async (imageSrc) => {
+  const onGetScreenshot = async imageSrc => {
     const webcamFile = await urlToFile(
       imageSrc,
       `webcam-${Math.round(Date.now() / 1000)}.jpg`,
