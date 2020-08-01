@@ -131,8 +131,8 @@ export default function ImageUploadForm(props) {
         <Divider /> */}
         <AppBar position="static">
           <Tabs value={1}>
-            <Tab label="😀Face" component={Link} to="/face" />
-            <Tab label="📦Object" component={Link} to="/object" />
+            <Tab label="😀 Face" component={Link} to="/face" />
+            <Tab label="📦 Object" component={Link} to="/object" />
           </Tabs>
         </AppBar>
         <form onSubmit={onSubmit}>
