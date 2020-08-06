@@ -17,13 +17,13 @@ import {
   Tab,
   Tabs,
 } from "@material-ui/core";
-import Link from 'react-router-dom/Link'
+import Link from "react-router-dom/Link";
 import CameraIcon from "@material-ui/icons/Camera";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 
 const ENDPOINT = process.env.REACT_APP_OBJECT_API_ENDPOINT || "";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   layout: {
     width: "auto",
     [theme.breakpoints.up(600 + theme.spacing(2) * 2)]: {
@@ -62,7 +62,7 @@ export default function ImageUploadForm(props) {
     setIsUploading(true);
     const formData = new FormData();
     formData.append("image", file);
-    formData.append("image_name", fileName);
+    if (fileName) formData.append("image_id", fileName);
     formData.append("time", Math.round(Date.now() / 1000));
     try {
       const res = await fetch(endpoint, {
@@ -89,25 +89,24 @@ export default function ImageUploadForm(props) {
     fileEl.current.click();
   };
 
-  const onChangeFileInput = e => {
+  const onChangeFileInput = (e) => {
     setFile(e.target.files[0]);
-    setFileName(e.target.files[0] ? e.target.files[0].name : "");
   };
 
-  const onChangeFileNameInput = e => {
+  const onChangeFileNameInput = (e) => {
     setFileName(e.target.value);
   };
 
-  const onChangeEndpointInput = e => {
+  const onChangeEndpointInput = (e) => {
     setEndpoint(e.target.value);
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     uploadFile(file, fileName, endpoint);
   };
 
-  const onGetScreenshot = async imageSrc => {
+  const onGetScreenshot = async (imageSrc) => {
     const webcamFile = await urlToFile(
       imageSrc,
       `webcam-${Math.round(Date.now() / 1000)}.jpg`,
@@ -130,7 +129,7 @@ export default function ImageUploadForm(props) {
         {/* <CardHeader title="Image Upload" />
         <Divider /> */}
         <AppBar position="static">
-          <Tabs value={1}>
+          <Tabs value={2}>
             <Tab label="😀 Face" component={Link} to="/face" />
             <Tab label="📦 Object" component={Link} to="/object" />
             <Tab label="📸 Image" component={Link} to="/image" />
@@ -197,7 +196,7 @@ export default function ImageUploadForm(props) {
                   type="text"
                   name="fileName"
                   label="Image Name"
-                  placeholder="name"
+                  placeholder="Optional"
                   value={fileName}
                   onChange={onChangeFileNameInput}
                   fullWidth
