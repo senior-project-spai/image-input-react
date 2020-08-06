@@ -21,7 +21,7 @@ import Link from "react-router-dom/Link";
 import CameraIcon from "@material-ui/icons/Camera";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 
-const ENDPOINT = process.env.REACT_APP_OBJECT_API_ENDPOINT || "";
+const ENDPOINT = process.env.REACT_APP_FADE_IMAGE_API_ENDPOINT || "";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
